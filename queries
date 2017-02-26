@@ -1,0 +1,20 @@
+query 3-> 
+select title_auth_journ from publications WHERE (publications.f_id in (SELECT id from faculty where LOWER(faculty.name) LIKE '%rajat%')and publications.year=2014 );
+
+
+query 4->
+
+select name from faculty, (select query1.f_id as mat from (select f_id,count(*) as con from group_mem where group_mem.course = "phd" GROUP BY f_id) query1 , (select max(query2.count_phd) as highest from (select f_id as f_id,count(*) as count_phd from group_mem where group_mem.course ="phd" GROUP BY f_id) query2) query3 where query1.con=query3.highest)ans where ans.mat=faculty.id;
+
+query 5->
+
+select name from faculty, (select query1.f_id as mat from (select f_id,count(*) as con from publications GROUP BY f_id) query1 , (select max(query2.count_phd) as highest from (select f_id as f_id,count(*) as count_phd from publications GROUP BY f_id) query2) query3 where query1.con=query3.highest)ans where ans.mat=faculty.id;
+
+query 6->
+
+select name from faculty, (select query1.f_id as mat from (select f_id,count(*) as con from projects GROUP BY f_id) query1 , (select max(query2.count_phd) as highest from (select f_id as f_id,count(*) as count_phd from projects GROUP BY f_id) query2) query3 where query1.con=query3.highest)ans where ans.mat=faculty.id;
+
+
+query 7->
+
+
